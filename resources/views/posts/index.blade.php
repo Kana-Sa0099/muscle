@@ -8,16 +8,18 @@
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
     </head>
-    <body class="antialiased">
+    <body>
         <h1>Muscle</h1>
         <div class='posts'>
             @foreach ($posts as $post)
             <div class='post'>
                 <h2 class='title'>{{ $post->title }}</h2>
                 <p class='body'>{{ $post->main }}</p>
-                <h3 user > {{ $Auth::user()->name }} </h3>
             </div>
             @endforeach
+        </div>
+        <div class='paginate'>
+            {{ $posts->links() }}
         </div>
     </body>
 </html>
