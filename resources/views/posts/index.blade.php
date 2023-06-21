@@ -8,16 +8,31 @@
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
     </head>
-    <body class="antialiased">
+    <body>
         <h1>Muscle</h1>
+        <a href='/posts/create'>create</a>
         <div class='posts'>
             @foreach ($posts as $post)
             <div class='post'>
-                <h2 class='title'>{{ $post->title }}</h2>
+                <a href="/posts/{{ $posts->id }}"><h2 class='title'>{{ $post->title }}</h2></a>
                 <p class='body'>{{ $post->main }}</p>
-                <h3 user > {{ $Auth::user()->name }} </h3>
+                <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="button" onclick="deletePost({{ $post->id }})">delete</button> 
+                </form>
             </div>
             @endforeach
         </div>
+        <div class='paginate'>{{ $posts->links() }}</div>
+        <script>
+            function deletePost(id) {
+                'use strict'
+
+                if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                    document.getElementById(`form_${id}`).submit();
+                }
+            }
+        </script>
     </body>
 </html>
